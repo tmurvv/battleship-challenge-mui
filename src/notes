@@ -1,0 +1,5 @@
+game states:
+    welcome
+    place ships
+    play
+    finished
