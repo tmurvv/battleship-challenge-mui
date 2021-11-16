@@ -1,20 +1,24 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import GridCss from '../styles/Grid.css';
-import {createGridLabels} from '../utils/utils.js';
+import {addRowColLabels, createGridLabels} from '../utils/utils.js';
+import GridItem from './GridItem';
+import PlaceShips from './PlaceShips';
  
 function Grid() {
     const [gridLabels, setGridLabels] = useState([]);
     useEffect(()=>{
-        setGridLabels(createGridLabels());
+        setGridLabels(addRowColLabels(createGridLabels()));
     }, []);
     return (
         <>
-            <div className="mainContainer">
+            <div className='gridHeader'>
                 <img className="logo" src="../img/BlackOwl_Systems_Logo_Owl.png" alt="Black Owl Systems Logo"/>
                 <h1>Battleship Challenge</h1>
-                {gridLabels.map(label=><p>{label}</p>)}
             </div>
-            
+            <div className='gridContainer'>
+                {gridLabels.map(label=><GridItem gridLabel={label} />)}
+            </div>
+            <PlaceShips />
             <GridCss />
         </>
     )

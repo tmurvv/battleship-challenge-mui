@@ -1,6 +1,7 @@
 body {   
     color: whitesmoke;
     background-color: #1A1F25;
+    box-sizing : border-box;
 }
 .btn {
     font-size: 24px;

@@ -1,16 +1,17 @@
-// import GridCss from '../styles/Grid.css';
- 
-function Grid() {
+import GridItemCss from '../styles/GridItem.css';
+
+function GridItem({gridLabel}) {
     return (
         <>
-            <div className="mainContainer">
-                <img className="logo" src="img/BlackOwls_Systems_Logo_Owl.png" alt="Black Owl Systems Logo"/>
+            <div className="gridItem">
+                {gridLabel.length===1
+                    ?gridLabel
+                    :<img key={gridLabel} className="gridImage" src="/img/BlackOwl_Systems_Logo_Owl.png" alt="Black Owl Systems Logo"/>
+                }
             </div>
-            {/* <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>{process.env.REACT_APP_DEV_ENV.indexOf('staging')>0&&'STAGING BACKEND'}</div>
-            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>{process.env.REACT_APP_DEV_ENV.indexOf('local')>0&&'LOCAL BACKEND'}</div> */}
-            {/* <GridCss /> */}
+            <GridItemCss />
         </>
     )
 }
 
-export default Grid;
+export default GridItem;

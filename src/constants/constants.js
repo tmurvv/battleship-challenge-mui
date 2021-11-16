@@ -1,3 +1,5 @@
+export const COLUMN_LABELS = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
 export const GRID_LABELS = () => {
     const fillGrid = [];
     const gridRows = ["A", "B", "C", "D", "E", "F", "G", "H"]

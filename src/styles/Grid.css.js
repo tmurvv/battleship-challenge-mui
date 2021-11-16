@@ -1,38 +1,29 @@
 function GridCss() {
     return (
         <style jsx="true">{`
-            .mainContainer {
-                background-color: #000000;
-                height: 200px;
+            body {
+                box-sizing : border-box;
+            }
+            .gridHeader {
+                background-color: #1A1F25;
                 display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-                padding: 0 20px;
-                position: relative;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                height: 30vh;
+                text-align: center;
             }
-            @media only screen and (max-width: 750px) {
-                .mainContainer {
-                  height: 120px;
-                  padding: 0 75px;
-                }
+            .gridHeader img {
+                width: 15vw;
+                height: 15vw;
+                margin: auto;
             }
-            .logo {
-                height: 70%;
-            }
-            @media only screen and (max-width: 550px) {
-                .textLogo {
-                    height: 45%;
-                    flex-direction: column-reverse;
-                    align-items: center;
-                }
-            }
-            .productGraphic {
-                height: 100%;
-            }
-            @media only screen and (max-width: 550px) {
-                .productGraphic {
-                    height: 40%;
-                }
+            .gridContainer {
+                width: 480px;
+                margin: 40px auto;
+                border: .5 solid #ECB208;
+                display: flex;
+                flex-wrap: wrap;
             }
         `}
     </style>
