@@ -5,24 +5,17 @@ function GridCss() {
                 box-sizing : border-box;
             }
             .gridHeader {
-                background-color: #1A1F25;
                 display: flex;
-                flex-direction: column;
                 justify-content: center;
                 width: 100%;
-                height: 30vh;
-                text-align: center;
-            }
-            .gridHeader img {
-                width: 15vw;
-                height: 15vw;
-                margin: auto;
+                margin: 40px;
             }
             .gridContainer {
-                width: 480px;
-                margin: 40px auto;
+                width: 450px;
+                margin: 0;
                 border: .5 solid #ECB208;
                 display: flex;
+                flex-direction: row;
                 flex-wrap: wrap;
             }
         `}

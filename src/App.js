@@ -2,15 +2,21 @@ import {useState} from 'react';
 import './App.css';
 import {GameStateContext} from "./contexts/GameStateContext";
 import {OccupiedContext} from "./contexts/OccupiedContext";
-import Grid from "./components/Grid";
+import {Player1Context} from "./contexts/Player1Context";
+import {Player2Context} from "./contexts/Player2Context";
+import PlayGame from "./components/PlayGame";
 
 function App() {
-    const [gameState, setGameState] = useState("play");
-    const [occupied, setOccupied] = useState(["B5"]);
+    const [gameState, setGameState] = useState("prepare");
+    const [occupied, setOccupied] = useState(["empty"]);
+    // const [player1Grid, setPlayer1Grid] = useState(gridInit);
+    // const [player2Grid, setPlayer2Grid] = useState(gridInit);
     
     return (
         <>  
-            <GameStateContext.Provider value={{gameState, setGameState}}>
+            <GameStateContext.Provider value={{gameState, setGameState}}>    
+                {/* <Player1Context.Provider value={{player1Grid, setPlayer1Grid}}>
+                <Player2Context.Provider value={{player2Grid, setPlayer2Grid}}> */}
                 <OccupiedContext.Provider value={{occupied, setOccupied}}>
                     {gameState==="welcome"
                         ?<>
@@ -20,12 +26,14 @@ function App() {
                             <div className='welcome'>
                                 <h1>Black Owl</h1>
                                 <h1>Battleship Challenge</h1>
-                                <button className='btn'>Enter</button>
+                                <button className='btn' onClick={()=>setGameState('prepare')}>Begin</button>
                             </div>
                         </>
-                        :<Grid />
+                        :<PlayGame />
                     }
                 </OccupiedContext.Provider>
+                {/* </Player2Context.Provider>
+                </Player1Context.Provider> */}
             </GameStateContext.Provider>
         </>
     );

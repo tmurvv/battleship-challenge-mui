@@ -16,6 +16,7 @@ function PlaceShipsCss() {
                 padding: 0 15px 15px;
                 text-align: center;
             }
+            
         `}
     </style>
     )

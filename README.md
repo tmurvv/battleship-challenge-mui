@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Battleship
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Purpose
+Create a simplified implementation of the classic game, Battleship, that best illustrates programming skills. This exercise should take no longer than 4 hours to complete.
 
-## Available Scripts
+## Requirements
+- Two boards, one for each player.
+- A board is an 8x8 grid for a total of 64 units.
+- Each player has one ship that is 3 grid units in length.
+- Each player will place their ship on the board either vertically or horizontally.
+- The ships cannot be placed outside the grid bounds.
+- Players take turns firing at their opponents ship.
+- A hit is when a ship part is in a grid unit that a player fires at.
+- A ship is sunk when all the parts have been hit.
+- Grid units are specified by column and row.
+- Columns are labeled A to H.
+- Rows are labeled 1 to 8.
+- The player grid should be displayed.
 
-In the project directory, you can run:
+## What we're looking for
+We want you to submit a solution you're proud of and we want you to be successful so here are some of the things we're looking for in a solution:
 
-### `npm start`
+- Minimum UI expectation is a console application that will print player grids after each turn.
+- We are looking for your understanding of best practices for designing quality code.
+- Looking for good object oriented programming principles but doesn't go overboard.
+- A solution that shows familiarity with language used.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Bonus
+- 10x10 grid.
+- Each player has 2 ships. One ship of 2 grid units and the other ship of 3 grid units.
+- The ships cannot occupy any of the same grid units.
+- The rest of the rules apply and the game ends when one player sinks both of the other players ships.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Example
+- Ship is placed horizontally at E4
 
-### `npm test`
+|   | A | B | C | D | E | F | G | H |
+| - | - | - | - | - | - | - | - | - |
+| 1 |   |   |   |   |   |   |   |   |
+| 2 |   |   |   |   |   |   |   |   |
+| 3 |   |   |   |   | S | S | S |   |
+| 4 |   |   |   |   |   |   |   |   |
+| 5 |   |   |   |   |   |   |   |   |
+| 6 |   |   |   |   |   |   |   |   |
+| 7 |   |   |   |   |   |   |   |   |
+| 8 |   |   |   |   |   |   |   |   |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Player fires at B2 (miss)
 
-### `npm run build`
+|   | A | B | C | D | E | F | G | H |
+| - | - | - | - | - | - | - | - | - |
+| 1 |   |   |   |   |   |   |   |   |
+| 2 |   | X |   |   |   |   |   |   |
+| 3 |   |   |   |   | S | S | S |   |
+| 4 |   |   |   |   |   |   |   |   |
+| 5 |   |   |   |   |   |   |   |   |
+| 6 |   |   |   |   |   |   |   |   |
+| 7 |   |   |   |   |   |   |   |   |
+| 8 |   |   |   |   |   |   |   |   |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Player fires at G4 (hit)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+|   | A | B | C | D | E   | F   | G   | H |
+| - | - | - | - | - | -   | -   | -   | - |
+| 1 |   |   |   |   |     |     |     |   |
+| 2 |   | X |   |   |     |     |     |   |
+| 3 |   |   |   |   | S   | S   | *X* |   |
+| 4 |   |   |   |   |     |     |     |   |
+| 5 |   |   |   |   |     |     |     |   |
+| 6 |   |   |   |   |     |     |     |   |
+| 7 |   |   |   |   |     |     |     |   |
+| 8 |   |   |   |   |     |     |     |   |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Player fires at F4 (hit)
 
-### `npm run eject`
+|   | A | B | C | D | E   | F   | G   | H |
+| - | - | - | - | - | -   | -   | -   | - |
+| 1 |   |   |   |   |     |     |     |   |
+| 2 |   | X |   |   |     |     |     |   |
+| 3 |   |   |   |   | S   | *X* | *X* |   |
+| 4 |   |   |   |   |     |     |     |   |
+| 5 |   |   |   |   |     |     |     |   |
+| 6 |   |   |   |   |     |     |     |   |
+| 7 |   |   |   |   |     |     |     |   |
+| 8 |   |   |   |   |     |     |     |   |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Player fires at E4 (sunk)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+|   | A | B | C | D | E   | F   | G   | H |
+| - | - | - | - | - | -   | -   | -   | - |
+| 1 |   |   |   |   |     |     |     |   |
+| 2 |   | X |   |   |     |     |     |   |
+| 3 |   |   |   |   | *X* | *X* | *X* |   |
+| 4 |   |   |   |   |     |     |     |   |
+| 5 |   |   |   |   |     |     |     |   |
+| 6 |   |   |   |   |     |     |     |   |
+| 7 |   |   |   |   |     |     |     |   |
+| 8 |   |   |   |   |     |     |     |   |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Sample Output
+Below is an example output, but feel free to be creative.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![sample output](example-output.png)

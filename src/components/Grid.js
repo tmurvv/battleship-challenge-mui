@@ -1,24 +1,27 @@
-import {useEffect, useState} from 'react';
 import GridCss from '../styles/Grid.css';
-import {addRowColLabels, createGridLabels} from '../utils/utils.js';
 import GridItem from './GridItem';
-import PlaceShips from './PlaceShips';
+import {COLUMN_LABELS} from '../constants/constants';
+import {COLUMN_NUMBERS} from '../constants/constants';
  
-function Grid() {
-    const [gridLabels, setGridLabels] = useState([]);
-    useEffect(()=>{
-        setGridLabels(addRowColLabels(createGridLabels()));
-    }, []);
+function Grid({grid, id}) {
     return (
-        <>
+        <> 
             <div className='gridHeader'>
-                <img className="logo" src="../img/BlackOwl_Systems_Logo_Owl.png" alt="Black Owl Systems Logo"/>
-                <h1>Battleship Challenge</h1>
+                {id&&id}
             </div>
-            <div className='gridContainer'>
-                {gridLabels.map(label=><GridItem gridLabel={label} />)}
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div className='gridContainer' style={{flexDirection: 'column', width: '52px', transform: 'translateY(52px)'}}> 
+                    {COLUMN_NUMBERS&&COLUMN_NUMBERS.map(label=><GridItem key={label} gridLabel={label} gridItemState={`heading`}/>)}
+                </div>
+                <div>
+                    <div className='gridContainer'> 
+                        {COLUMN_LABELS&&COLUMN_LABELS.map(label=><GridItem key={label} gridLabel={label} gridItemState={`heading`}/>)}
+                    </div>
+                    <div className='gridContainer'> 
+                        {grid&&grid.map((label,idx)=><GridItem key={`${Number(idx+1)}-${id}`} gridLabel={`${Number(idx+1)}-${id}`} gridItemState={`${grid[idx+1]}`}/>)}
+                    </div>
+                </div>
             </div>
-            <PlaceShips />
             <GridCss />
         </>
     )
