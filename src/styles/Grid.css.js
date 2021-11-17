@@ -8,7 +8,7 @@ function GridCss() {
                 display: flex;
                 justify-content: center;
                 width: 100%;
-                margin: 40px;
+                margin: 60px 0 20px;
             }
             .gridContainer {
                 width: 450px;

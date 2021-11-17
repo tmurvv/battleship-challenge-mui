@@ -13,7 +13,7 @@ function PlayControlsCss() {
                 flex-wrap: wrap;
             }
             .fire-btn {
-                background: red;
+                background: #ECB208;
                 font-size: 26px;
                 padding: 10px 30px;
                 border-radius: 7px;
@@ -21,14 +21,14 @@ function PlayControlsCss() {
                 margin: auto;
                 margin-bottom: 40px;
             }
-            .inputUnit {
+            .inputContainer {
                 display: flex;
                 width: 100%;
                 flex-direction: column;
                 align-items: center;
                 margin: 25px;
             }
-            .inputUnit input {
+            .inputContainer input {
                 border-radius: 7px;
                 font-size: 16px;
                 padding: 10px 15px;

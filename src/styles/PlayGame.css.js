@@ -3,6 +3,7 @@ function GridCss() {
         <style jsx="true">{`
             body {
                 box-sizing : border-box;
+                padding: 30px;
             }
             .playGameHeader {
                 background-color: #1A1F25;
@@ -25,9 +26,6 @@ function GridCss() {
                 display: flex;
                 flex-wrap: wrap;
             }
-            // .battleship {
-            //     position: absolute;
-            // }
         `}
     </style>
     )
