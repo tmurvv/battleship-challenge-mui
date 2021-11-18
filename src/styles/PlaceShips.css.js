@@ -16,7 +16,11 @@ function PlaceShipsCss() {
                 padding: 0 15px 15px;
                 text-align: center;
             }
-            
+            .beginGame {
+                font-size: 26px;
+                padding: 10px 20px;
+                background-color: #D09D12;
+            }
         `}
     </style>
     )

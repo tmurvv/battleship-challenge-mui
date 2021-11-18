@@ -5,9 +5,7 @@ import {
     findGoodSquares, 
     createGridAlphaNum, 
     markOccupied,
-    getOccupied,
     getGridItemNumber,
-    getGridAlphaNumber,
     gridInit,
     removeOccupied
 } from '../utils/utils';
@@ -44,19 +42,31 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
     }
     return (
         <div style={{margin: 'auto'}}>
-            <h4 style={{textAlign: 'center'}}>{end2===""?"Time to place your ships on the board!":"Ships are ready!"}</h4>  
-            <div style={{textAlign: 'center'}}>{end2===""?"":"Refresh Screen to change ship placement"}</div> 
+            <h4 style={{textAlign: 'center'}}>
+                {end2===""?"Time to place your ships on the board!":"Ships are ready!"}
+            </h4>  
+            <div style={{textAlign: 'center'}}>
+                {end2===""?"":"Refresh Screen to change ship placement"}
+            </div> 
             <div className="placeShipsContainer"> 
                 <div className="ship">
                     <h3>Place Ship #1</h3>
                     <p style={{fontStyle: 'italic'}}>Length of 2</p>
                     <p>Starting Coordinate</p>
-                    <select name='start1' onChange={(e)=>{setStart1(e.target.value); handleStartSelect(e);}} disabled={end1!==''||end2!==''}>
+                    <select 
+                        name='start1' 
+                        onChange={(e)=>{setStart1(e.target.value); handleStartSelect(e);}} 
+                        disabled={end1!==''||end2!==''}
+                    >
                         <option key="startselect1">select</option>
                         {gridLabels.map(label=><option key={label}>{label}</option>)}
                     </select>
                     <p>Ending Coordinate</p>
-                    <select name='end1' onChange={(e)=>{setEnd1(e.target.value); handleEndSelect(e);}} disabled={start1==="B9"||end1!==''||end2!==''}>
+                    <select 
+                        name='end1' 
+                        onChange={(e)=>{setEnd1(e.target.value); handleEndSelect(e);}} 
+                        disabled={start1==="B9"||end1!==''||end2!==''}
+                    >
                         <option key="endselect1">select</option>
                         {end1GoodSquares.map(label=><option key={label}>{label}</option>)}
                     </select>
@@ -65,20 +75,33 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
                     <h3>Place Ship #2</h3>
                     <p style={{fontStyle: 'italic'}}>Length of 3</p>
                     <p>Starting Coordinate</p>
-                    <select name='start2' onChange={(e)=>{setStart2(e.target.value); handleStartSelect(e);}} disabled={end1===""||end2!==''}>
+                    <select 
+                        name='start2' 
+                        onChange={(e)=>{setStart2(e.target.value); handleStartSelect(e);}} 
+                        disabled={end1===""||end2!==''}
+                    >
                         <option key="startselect2">{start2}</option>
                         {(removeOccupied(player1Grid)).map(label=><option key={label}>{label}</option>)}
                         <option key='safety'>{start2}</option>
                     </select>
                     <p>Ending Coordinate</p>
-                    <select name='end2' onChange={(e)=>{setEnd2(e.target.value); handleEndSelect(e);}} disabled={start2==="select"||end2!==''}>
+                    <select 
+                        name='end2' 
+                        onChange={(e)=>{setEnd2(e.target.value); handleEndSelect(e);}} 
+                        disabled={start2==="select"||end2!==''}
+                    >
                         <option key="endselect2">select</option>
                         {end2GoodSquares.map(label=><option key={label}>{label}</option>)}
                     </select>
                 </div>
             </div>
             <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                <button style={{fontSize: '26px', padding: '10px 20px', backgroundColor: '#D09D12'}} type='button' onClick={()=>setGameState('play')} disabled={end2===''}>Begin Game</button>
+                <button 
+                    className='beginGame' 
+                    type='button' 
+                    onClick={()=>setGameState('play')} 
+                    disabled={end2===''}
+                >Begin Game</button>
             </div>
             <PlaceShipsCss />
         </div>
