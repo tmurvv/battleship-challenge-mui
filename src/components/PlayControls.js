@@ -20,7 +20,10 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         if (newGrid[getGridItemNumber(target)]!=='ship'&&newGrid[getGridItemNumber(target)]!=='empty') return alert('Already targeted')
         
         // if a hit, check if game over and update score
-        if (newGrid[getGridItemNumber(target)] === 'ship'&&hits[0]+1===5) return alert("Player 1 wins!! Refresh screen to play again.");
+        if (newGrid[getGridItemNumber(target)] === 'ship'&&hits[0]+1===5) {
+            setPlayer2Grid(newGrid);
+            return alert("Player 1 wins!! Refresh screen to play again.");
+        }
         newGrid[getGridItemNumber(target)] === 'ship'&&setHits([hits[0]+1, hits[1]]);
         
         // change player message
@@ -40,7 +43,10 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         alert(`Player2 fires on ${getGridAlphaNumber(player1Target)}!`)
         
         // if a hit, check if game over and update score
-        if (newGrid[player1Target] === 'ship'&&hits[1]+1===5) return alert("Player 2 wins!! Refresh screen to play again.");
+        if (newGrid[player1Target] === 'ship'&&hits[1]+1===5) {
+            setPlayer1Grid(newGrid);
+            return alert("Player 2 wins!! Refresh screen to play again.");
+        }
         newGrid[player1Target] === 'ship'&&setHits([hits[0], hits[1]+1]);
         
         // change player message
@@ -51,22 +57,6 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         setPlayer1Grid(newGrid);
         setPlayer1Turn(true);
     }
-    
-    // useEffect(() => {
-    //     const handleUserKeyPress = event => {
-    //         const { key, keyCode } = event;
-
-    //         if (keyCode === 13) {
-    //             document.querySelector("#player1Fire").click();
-    //         }
-    //     };
-
-    //     window.addEventListener("keydown", handleUserKeyPress);
-
-    //     return () => {
-    //         window.removeEventListener("keydown", handleUserKeyPress);
-    //     };
-    // }, [target]); // ESLint will yell here, if `target` is missing
     
     return (
         <>
