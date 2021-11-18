@@ -1,5 +1,7 @@
 export const COLUMN_LABELS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 export const COLUMN_NUMBERS = ["1", "2", "3", "4", "5", "6", "7", "8"];
+export const LOW_GRID_NUMBER = 0;
+export const HIGH_GRID_NUMBER = 63;
 
 export const GRID_LABELS = () => {
     const fillGrid = [];

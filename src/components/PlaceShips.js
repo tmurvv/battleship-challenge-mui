@@ -4,7 +4,11 @@ import {GameStateContext} from "../contexts/GameStateContext";
 import {
     findGoodSquares, 
     createGridAlphaNum, 
-    markOccupied
+    markOccupied,
+    getOccupied,
+    getGridItemNumber,
+    getGridAlphaNumber,
+    gridInit
 } from '../utils/utils';
 
 function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, setStart2, end1, setEnd1, end2, setEnd2}) {
@@ -15,8 +19,9 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
 
     function handleStartSelect(e) {
         const shipLength = e.target.name.endsWith("1")?2:3;
-        const goodSquares = findGoodSquares(e.target.value, shipLength, player1Grid)
+        const goodSquares = findGoodSquares(getGridItemNumber(e.target.value), shipLength, player1Grid);
         if (shipLength===2) {
+            setPlayer1Grid(gridInit);
             setEnd1GoodSquares(goodSquares);
             setEnd1('');
         } else {
@@ -37,7 +42,6 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
     return (
         <div style={{margin: 'auto'}}>
             <h4 style={{textAlign: 'center'}}>{end2===""?"Time to place your ships on the board!":"Ships are ready!"}</h4>  
-            <div style={{textAlign: 'center', marginTop: '-20px'}}>{end2===""?"":"Press fire to begin game"}</div> 
             <div style={{textAlign: 'center'}}>{end2===""?"":"Refresh Screen to change ship placement"}</div> 
             <div className="placeShipsContainer"> 
                 <div className="ship">
@@ -60,7 +64,7 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
                     <p>Starting Coordinate</p>
                     <select name='start2' onChange={(e)=>{setStart2(e.target.value); handleStartSelect(e);}} disabled={end1===""||end2!==''}>
                         <option key="startselect2">{start2}</option>
-                        {gridLabels.map(label=><option key={label}>{label}</option>)}
+                        {gridLabels.map(label=><option key={label} disabled={label===getOccupied(player1Grid)[0]}>{label}</option>)}
                         <option key='safety'>{start2}</option>
                     </select>
                     <p>Ending Coordinate</p>

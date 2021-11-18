@@ -1,19 +1,22 @@
-import {COLUMN_LABELS} from '../constants/constants';
-import {COLUMN_NUMBERS} from '../constants/constants';
+import {
+    COLUMN_LABELS,
+    COLUMN_NUMBERS,
+    LOW_GRID_NUMBER,
+    HIGH_GRID_NUMBER
+} from '../constants/constants';
 
 export const gridInit = ()=>{
     const fillGrid = []
     for (let n=0; n<=64; n++) {
         fillGrid.push(`empty`);
     }
-    console.log('fillGrid:', fillGrid)
     return fillGrid;
 }
 export const createGridAlphaNum = () => {
     const fillGrid = [];
     const gridCols = ["A", "B", "C", "D", "E", "F", "G", "H"]
     // populate fillGrid with AlphaNum labels (A1, A2...H7, H8)
-    for (let n=0; n<8; n++) {
+    for (let n=1; n<9; n++) {
         gridCols.forEach((element, idx) => {
             fillGrid.push(`${element}${n}`)
         });
@@ -30,19 +33,36 @@ export const addRowColLabels = (grid) => {
     // add row of column labels at top
     return gridCols.concat(grid);
 }
-export const findGoodSquares = (gridLabel, shipSize, occupied) => {
-    const letter = gridLabel.substr(0,1);
-    const letterIdx = COLUMN_LABELS.indexOf(letter);
-    const number = Number(gridLabel.substr(1,1));
+export const findGoodSquares = (gridNumber, shipSize, grid) => {
     const goodSquares = [];
-    
-    // if end square on grid and not occupied, add to 'goodSquares' array
-    if (number<10-shipSize&&(occupied.indexOf(`${letter}${number+(shipSize-1)}`)<0)) goodSquares.push(`${letter}${number+(shipSize-1)}`);
-    if (number>-1+shipSize&&(occupied.indexOf(`${letter}${number-(shipSize-1)}`)<0)) goodSquares.push(`${letter}${number-(shipSize-1)}`);
-    if (letterIdx<(9-shipSize)&&(occupied.indexOf(`${COLUMN_LABELS[letterIdx+(shipSize-1)]}${number}`)<0)) goodSquares.push(`${COLUMN_LABELS[letterIdx+(shipSize-1)]}${number}`);
-    if (letterIdx>(-1+shipSize)&&(occupied.indexOf(`${COLUMN_LABELS[letterIdx-(shipSize-1)]}${number}`)<0)) goodSquares.push(`${COLUMN_LABELS[letterIdx-(shipSize-1)]}${number}`);
-   
+    if (shipSize===2) {
+        gridNumber+1<64&&(gridNumber+1)%8!==0&&goodSquares.push(getGridAlphaNumber(gridNumber+1));
+        gridNumber-1>-1&&(gridNumber-1)%8!==7&&goodSquares.push(getGridAlphaNumber(gridNumber-1));
+        gridNumber+8<64&&goodSquares.push(getGridAlphaNumber(gridNumber+8));
+        gridNumber-8>-1&&goodSquares.push(getGridAlphaNumber(gridNumber-8));
+    }
+    if (shipSize===3) {
+        // gridNumber+2<64&&(gridNumber+2)%8!==8&&goodSquares.push([getGridAlphaNumber(gridNumber+2)]);
+        gridNumber+2<=HIGH_GRID_NUMBER&&(gridNumber+2)%8>1&&goodSquares.push([getGridAlphaNumber(gridNumber+2)]);
+        gridNumber-2>=LOW_GRID_NUMBER&&(gridNumber-2)%8<6&&goodSquares.push([getGridAlphaNumber(gridNumber-2)]);
+        gridNumber+16<=HIGH_GRID_NUMBER&&goodSquares.push([getGridAlphaNumber(gridNumber+16)]);
+        gridNumber-16>=LOW_GRID_NUMBER&&goodSquares.push([getGridAlphaNumber(gridNumber-16)]);
+    }
+
     return goodSquares;
+
+    // const letter = gridLabel.substr(0,1);
+    // const letterIdx = COLUMN_LABELS.indexOf(letter);
+    // const number = Number(gridLabel.substr(1,1));
+    // const goodSquares = [];
+    
+    // // if end square on grid and not occupied, add to 'goodSquares' array
+    // if (number<10-shipSize&&(occupied.indexOf(`${letter}${number+(shipSize-1)}`)<0)) goodSquares.push(`${letter}${number+(shipSize-1)}`);
+    // if (number>-1+shipSize&&(occupied.indexOf(`${letter}${number-(shipSize-1)}`)<0)) goodSquares.push(`${letter}${number-(shipSize-1)}`);
+    // if (letterIdx<(9-shipSize)&&(occupied.indexOf(`${COLUMN_LABELS[letterIdx+(shipSize-1)]}${number}`)<0)) goodSquares.push(`${COLUMN_LABELS[letterIdx+(shipSize-1)]}${number}`);
+    // if (letterIdx>(-1+shipSize)&&(occupied.indexOf(`${COLUMN_LABELS[letterIdx-(shipSize-1)]}${number}`)<0)) goodSquares.push(`${COLUMN_LABELS[letterIdx-(shipSize-1)]}${number}`);
+   
+    // return goodSquares;
 }
 export const getGridItemNumber = (label) => {
     if (!label) return 'Error, label not defined';
@@ -57,8 +77,9 @@ export const getGridAlphaNumber = (gridNumber) => {
     if (gridNumber!==0&&!gridNumber) return 'Error, grid number not defined.';
     if (gridNumber<0||gridNumber>63) return 'Error, grid number out of range.';
     if (gridNumber===0) return 'A1';
-    const letter = COLUMN_LABELS[gridNumber%8===0?7:(gridNumber % 8)];
-    const alphaLabelNumber = gridNumber%8===0?Math.floor(gridNumber/8):Math.floor(gridNumber/8)+1;
+    const letter = COLUMN_LABELS[gridNumber%8];
+    // const alphaLabelNumber = gridNumber%8===1?Math.floaor(gridNumber/8)+1:Math.floor(gridNumber/8);
+    const alphaLabelNumber = gridNumber%8===0?Math.ceil(gridNumber/8)+1:Math.ceil(gridNumber/8);
     return `${letter}${alphaLabelNumber}`;
 }
 export const markOccupied=(startSquare, endSquare, shipSize, player1Grid) => {
@@ -68,12 +89,12 @@ export const markOccupied=(startSquare, endSquare, shipSize, player1Grid) => {
     const shipEnd = getGridItemNumber(endSquare);
     const shipDirection = startSquare.substr(0,1)===endSquare.substr(0,1)?'vertical':'horizontal';
     // mark start and end squares
-    newGrid[getGridItemNumber(startSquare)] = 'ship';
-    newGrid[getGridItemNumber(endSquare)] = 'ship';
+    newGrid[getGridItemNumber(startSquare)+1] = 'ship';
+    newGrid[getGridItemNumber(endSquare)+1] = 'ship';
     // if 3-hole ship, mark middle square
     if (shipSize===3) {    
-        if (shipStart<shipEnd) newGrid[shipStart+(shipDirection==='vertical'?8:1)] = 'ship';
-        if (shipStart>shipEnd) newGrid[shipStart-(shipDirection==='vertical'?8:1)] = 'ship';
+        if (shipStart<shipEnd) newGrid[shipStart+(shipDirection==='vertical'?9:2)] = 'ship';
+        if (shipStart>shipEnd) newGrid[shipEnd+(shipDirection==='vertical'?9:2)] = 'ship';
     }
     return newGrid;
 }
@@ -94,4 +115,11 @@ export const player2place = () => {
     cleanGrid[shipstart2+(shipstart2<shipend2?1:-1)] = 'ship';
 
     return cleanGrid;
+}
+// gets list of occupied spaces in a grid
+export function getOccupied(grid) {
+    if (!grid) return [];
+    const occupied = [];
+    grid.forEach((square, idx) => square==='ship'&&occupied.push(idx))
+    return occupied;
 }
