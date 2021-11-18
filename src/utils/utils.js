@@ -49,10 +49,10 @@ export const findGoodSquares = (gridNumber, shipSize, grid) => {
         gridNumber-8>=LOW_GRID_NUMBER&&goodSquares.push(getGridAlphaNumber(gridNumber-8));
     }
     if (shipSize===3) {
-        gridNumber+2<=HIGH_GRID_NUMBER&&(gridNumber+2)%8>1&&grid[gridNumber+2]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber+2)]);
-        gridNumber-2>=LOW_GRID_NUMBER&&(gridNumber-2)%8<6&&grid[gridNumber-2]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber-2)]);
-        gridNumber+16<=HIGH_GRID_NUMBER&&grid[gridNumber+16]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber+16)]);
-        gridNumber-16>=LOW_GRID_NUMBER&&grid[gridNumber-16]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber-16)]);
+        gridNumber+2<=HIGH_GRID_NUMBER&&(gridNumber+2)%8>1&&grid[gridNumber+2]!=='ship'&&goodSquares.push(getGridAlphaNumber(gridNumber+2));
+        gridNumber-2>=LOW_GRID_NUMBER&&(gridNumber-2)%8<6&&grid[gridNumber-2]!=='ship'&&goodSquares.push(getGridAlphaNumber(gridNumber-2));
+        gridNumber+16<=HIGH_GRID_NUMBER&&grid[gridNumber+16]!=='ship'&&goodSquares.push(getGridAlphaNumber(gridNumber+16));
+        gridNumber-16>=LOW_GRID_NUMBER&&grid[gridNumber-16]!=='ship'&&goodSquares.push(getGridAlphaNumber(gridNumber-16));
     }
     
     return goodSquares;
@@ -95,25 +95,36 @@ export const markOccupied=(startSquare, endSquare, shipSize, player1Grid) => {
     return newGrid;
 }
 export const player2place = () => {
+    function getShipStart2(start1, end1) {
+        let shipstart2 = Math.floor(Math.random()*63);
+        if (shipstart2===start1 || shipstart2 === end1) getShipStart2(start1,end1);
+        return shipstart2
+    }
     let cleanGrid = gridInit();
 
     // get random ship coordinates
     const shipstart1 = Math.floor(Math.random()*63);
-    let shipstart2 = Math.floor(Math.random()*63);
-    if (shipstart2===shipstart1) shipstart2 = Math.floor(Math.random()*63);
-    if (shipstart2===shipstart1+1) shipstart2 = Math.floor(Math.random()*63); // TODO needs to be recursive
+    const goodSquares1 = findGoodSquares(shipstart1, 2, cleanGrid);
+    const shipend1 = getGridItemNumber(goodSquares1[Math.floor(Math.random() * goodSquares1.length)]);
     
-    const shipend1 = shipstart1+(shipstart1%8<7&&shipstart1%8>0?1:-1);
-    const shipend2 = shipstart2+(shipstart2%8<7&&shipstart2%8>0?2:-2);
-    
-    // mark squares occupied
+    // Mark squares occupied
     cleanGrid[shipstart1] = 'ship';
     cleanGrid[shipend1] = 'ship';
+    
+    // Todo refactor into one function
+    let shipstart2 = getShipStart2(shipstart1, shipend1);
+    const goodSquares2 = findGoodSquares(shipstart2, 3, cleanGrid)
+    const shipend2 = getGridItemNumber(goodSquares2[Math.floor(Math.random() * goodSquares2.length)]);
+    
+    // mark squares occupied
     cleanGrid[shipstart2] = 'ship';
     cleanGrid[shipend2] = 'ship';
     
-    // if 3-holed ship, mark middle square occupied
-    cleanGrid[shipstart2+(shipstart2<shipend2?1:-1)] = 'ship';
+    // if 3-hole ship, mark middle square
+    const shipDirection = getGridAlphaNumber(shipstart2).substr(0,1)===getGridAlphaNumber(shipend2).substr(0,1)?'vertical':'horizontal';
+    if (shipstart2<shipend2) cleanGrid[shipstart2+(shipDirection==='vertical'?8:1)] = 'ship';
+    if (shipstart2>shipend2) cleanGrid[shipend2+(shipDirection==='vertical'?8:1)] = 'ship';
+    
     return cleanGrid;
 }
 // gets list of occupied spaces in a grid
