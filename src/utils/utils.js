@@ -82,7 +82,7 @@ export const markOccupied=(startSquare, endSquare, shipSize, player1Grid) => {
     // mark start and end squares
     newGrid[getGridItemNumber(startSquare)] = 'ship';
     newGrid[getGridItemNumber(endSquare)] = 'ship';
-    
+
     // if 3-hole ship, mark middle square
     if (shipSize===3) {    
         if (shipStart<shipEnd) newGrid[shipStart+(shipDirection==='vertical'?8:1)] = 'ship';
@@ -95,8 +95,10 @@ export const player2place = () => {
     let cleanGrid = gridInit();
 
     // get random ship coordinates
-    const shipstart1 = Math.floor(Math.random()*63)+1;
-    const shipstart2 = Math.floor(Math.random()*63)+1;
+    const shipstart1 = Math.floor(Math.random()*63);
+    let shipstart2 = Math.floor(Math.random()*63);
+    if (shipstart2===shipstart1) shipstart2 = Math.floor(Math.random()*63);
+    if (shipstart2===shipstart1+1) shipstart2 = Math.floor(Math.random()*63); // TODO needs to be recursive
     const shipend1 = shipstart1+(shipstart1%8<7&&shipstart1%8>0?1:-1);
     const shipend2 = shipstart2+(shipstart2%8<7&&shipstart2%8>0?2:-2);
     
@@ -108,7 +110,6 @@ export const player2place = () => {
     
     // if 3-holed ship, mark middle square occupied
     cleanGrid[shipstart2+(shipstart2<shipend2?1:-1)] = 'ship';
-
     return cleanGrid;
 }
 // gets list of occupied spaces in a grid

@@ -10,7 +10,7 @@ function PlayGame() {
     const {gameState} = useContext(GameStateContext);
     const [hits, setHits]=useState([0,0]);
     const [player1Grid, setPlayer1Grid] = useState(gridInit);
-    const [player2Grid, setPlayer2Grid] = useState(player2place);
+    const [player2Grid, setPlayer2Grid] = useState(player2place());
     const [start1, setStart1] = useState("B9");
     const [end1, setEnd1] = useState("");
     const [start2, setStart2] = useState("select");
