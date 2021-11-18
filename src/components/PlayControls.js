@@ -17,6 +17,8 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         if (newGrid[getGridItemNumber(target)] === 'ship'&&hits[0]+1===5) return alert("Player 1 wins!! Refresh screen to play again.");
         newGrid[getGridItemNumber(target)] === 'ship'&&setHits([hits[0]+1, hits[1]]);
         
+        // change player message
+        document.querySelector('#inputLabel').innerText=newGrid[getGridItemNumber(target)] === 'ship'?`Hit !!! Good Shooting !!!`:`Miss`;
         // update grid and turn
         newGrid[getGridItemNumber(target)] = newGrid[getGridItemNumber(target)]==='ship'?'hit': 'miss';
         setTarget('');
@@ -34,6 +36,9 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         if (newGrid[player1Target] === 'ship'&&hits[1]+1===5) return alert("Player 2 wins!! Refresh screen to play again.");
         newGrid[player1Target] === 'ship'&&setHits([hits[0], hits[1]+1]);
         
+        // change player message
+        document.querySelector('#inputLabel').innerText='Which square would you like to target?';
+        
         // update grid and turn
         newGrid[player1Target] = newGrid[player1Target]==='ship'?'hit': 'miss';
         setPlayer1Grid(newGrid);
@@ -44,7 +49,7 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         <>
             <div className="playControlsContainer">
                 <div className='inputContainer'>
-                    <label htmlFor="target"><h3>Which square would you like to target?</h3></label>
+                    <label htmlFor="target"><h3 id='inputLabel'>Which square would you like to target?</h3></label>
                     <input value={target} id='target' onChange={(e)=>setTarget(e.target.value)} name="target" disabled={!player1Turn}/>
                 </div>
                 <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>

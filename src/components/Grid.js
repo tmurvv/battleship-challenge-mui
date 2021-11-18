@@ -19,7 +19,7 @@ function Grid({grid, id}) {
                             {COLUMN_LABELS&&COLUMN_LABELS.map(label=><GridItem key={label} gridLabel={label} gridItemState={`heading`}/>)}
                         </div>
                         <div className='gridContainer'> 
-                            {grid&&grid.map((label,idx)=><GridItem key={`${Number(idx)}-${id}`} gridLabel={`${Number(idx)}-${id}`} gridItemState={`${grid[idx+1]}`}/>)}
+                            {grid&&grid.map((label,idx)=><GridItem key={`${Number(idx)}-${id}`} gridLabel={`${Number(idx)}-${id}`} gridItemState={`${grid[idx]}`}/>)}
                         </div>
                     </div>
                 </div>

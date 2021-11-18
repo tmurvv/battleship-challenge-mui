@@ -23,6 +23,10 @@ export const createGridAlphaNum = () => {
     }
     return fillGrid;
 }
+export const removeOccupied = (grid) => {
+    const gridItemList = createGridAlphaNum();
+    return gridItemList.filter(gridItem=>gridItem!=='delete')
+}
 export const addRowColLabels = (grid) => {
     const gridCols = ["", "A", "B", "C", "D", "E", "F", "G", "H"];
     const gridRows = ["1", "2", "3", "4", "5", "6", "7", "8"];
@@ -36,33 +40,19 @@ export const addRowColLabels = (grid) => {
 export const findGoodSquares = (gridNumber, shipSize, grid) => {
     const goodSquares = [];
     if (shipSize===2) {
-        gridNumber+1<64&&(gridNumber+1)%8!==0&&goodSquares.push(getGridAlphaNumber(gridNumber+1));
-        gridNumber-1>-1&&(gridNumber-1)%8!==7&&goodSquares.push(getGridAlphaNumber(gridNumber-1));
-        gridNumber+8<64&&goodSquares.push(getGridAlphaNumber(gridNumber+8));
-        gridNumber-8>-1&&goodSquares.push(getGridAlphaNumber(gridNumber-8));
+        gridNumber+1<=HIGH_GRID_NUMBER&&(gridNumber+1)%8!==0&&goodSquares.push(getGridAlphaNumber(gridNumber+1));
+        gridNumber-1>=LOW_GRID_NUMBER&&(gridNumber-1)%8!==7&&goodSquares.push(getGridAlphaNumber(gridNumber-1));
+        gridNumber+8<=HIGH_GRID_NUMBER&&goodSquares.push(getGridAlphaNumber(gridNumber+8));
+        gridNumber-8>=LOW_GRID_NUMBER&&goodSquares.push(getGridAlphaNumber(gridNumber-8));
     }
     if (shipSize===3) {
-        // gridNumber+2<64&&(gridNumber+2)%8!==8&&goodSquares.push([getGridAlphaNumber(gridNumber+2)]);
-        gridNumber+2<=HIGH_GRID_NUMBER&&(gridNumber+2)%8>1&&goodSquares.push([getGridAlphaNumber(gridNumber+2)]);
-        gridNumber-2>=LOW_GRID_NUMBER&&(gridNumber-2)%8<6&&goodSquares.push([getGridAlphaNumber(gridNumber-2)]);
-        gridNumber+16<=HIGH_GRID_NUMBER&&goodSquares.push([getGridAlphaNumber(gridNumber+16)]);
-        gridNumber-16>=LOW_GRID_NUMBER&&goodSquares.push([getGridAlphaNumber(gridNumber-16)]);
+        gridNumber+2<=HIGH_GRID_NUMBER&&(gridNumber+2)%8>1&&grid[gridNumber+2]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber+2)]);
+        gridNumber-2>=LOW_GRID_NUMBER&&(gridNumber-2)%8<6&&grid[gridNumber-2]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber-2)]);
+        gridNumber+16<=HIGH_GRID_NUMBER&&grid[gridNumber+16]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber+16)]);
+        gridNumber-16>=LOW_GRID_NUMBER&&grid[gridNumber-16]!=='ship'&&goodSquares.push([getGridAlphaNumber(gridNumber-16)]);
     }
-
-    return goodSquares;
-
-    // const letter = gridLabel.substr(0,1);
-    // const letterIdx = COLUMN_LABELS.indexOf(letter);
-    // const number = Number(gridLabel.substr(1,1));
-    // const goodSquares = [];
     
-    // // if end square on grid and not occupied, add to 'goodSquares' array
-    // if (number<10-shipSize&&(occupied.indexOf(`${letter}${number+(shipSize-1)}`)<0)) goodSquares.push(`${letter}${number+(shipSize-1)}`);
-    // if (number>-1+shipSize&&(occupied.indexOf(`${letter}${number-(shipSize-1)}`)<0)) goodSquares.push(`${letter}${number-(shipSize-1)}`);
-    // if (letterIdx<(9-shipSize)&&(occupied.indexOf(`${COLUMN_LABELS[letterIdx+(shipSize-1)]}${number}`)<0)) goodSquares.push(`${COLUMN_LABELS[letterIdx+(shipSize-1)]}${number}`);
-    // if (letterIdx>(-1+shipSize)&&(occupied.indexOf(`${COLUMN_LABELS[letterIdx-(shipSize-1)]}${number}`)<0)) goodSquares.push(`${COLUMN_LABELS[letterIdx-(shipSize-1)]}${number}`);
-   
-    // return goodSquares;
+    return goodSquares;
 }
 export const getGridItemNumber = (label) => {
     if (!label) return 'Error, label not defined';
@@ -88,18 +78,23 @@ export const markOccupied=(startSquare, endSquare, shipSize, player1Grid) => {
     const shipStart = getGridItemNumber(startSquare);
     const shipEnd = getGridItemNumber(endSquare);
     const shipDirection = startSquare.substr(0,1)===endSquare.substr(0,1)?'vertical':'horizontal';
+
     // mark start and end squares
-    newGrid[getGridItemNumber(startSquare)+1] = 'ship';
-    newGrid[getGridItemNumber(endSquare)+1] = 'ship';
+    newGrid[getGridItemNumber(startSquare)] = 'ship';
+    newGrid[getGridItemNumber(endSquare)] = 'ship';
+    
     // if 3-hole ship, mark middle square
     if (shipSize===3) {    
-        if (shipStart<shipEnd) newGrid[shipStart+(shipDirection==='vertical'?9:2)] = 'ship';
-        if (shipStart>shipEnd) newGrid[shipEnd+(shipDirection==='vertical'?9:2)] = 'ship';
+        if (shipStart<shipEnd) newGrid[shipStart+(shipDirection==='vertical'?8:1)] = 'ship';
+        if (shipStart>shipEnd) newGrid[shipEnd+(shipDirection==='vertical'?8:1)] = 'ship';
     }
+
     return newGrid;
 }
 export const player2place = () => {
     let cleanGrid = gridInit();
+
+    // get random ship coordinates
     const shipstart1 = Math.floor(Math.random()*63)+1;
     const shipstart2 = Math.floor(Math.random()*63)+1;
     const shipend1 = shipstart1+(shipstart1%8<7&&shipstart1%8>0?1:-1);

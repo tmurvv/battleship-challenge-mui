@@ -13,7 +13,7 @@ function PlayGame() {
     const [player2Grid, setPlayer2Grid] = useState(player2place);
     const [start1, setStart1] = useState("B9");
     const [end1, setEnd1] = useState("");
-    const [start2, setStart2] = useState("E9");
+    const [start2, setStart2] = useState("select");
     const [end2, setEnd2] = useState("");
     
     return (
@@ -27,7 +27,7 @@ function PlayGame() {
                 </div>
                 <div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
                     <Grid id='PLAYER1' grid={player1Grid}/>
-                    {gameState&&gameState==='play'&&<Grid id='PLAYER2' grid={player2Grid}/>}
+                    <Grid id='PLAYER2' grid={player2Grid}/>
                 </div>
                 {gameState&&gameState==='prepare'&&<PlaceShips
                     player1Grid={player1Grid} 

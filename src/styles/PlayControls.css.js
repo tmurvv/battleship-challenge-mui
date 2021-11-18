@@ -18,8 +18,8 @@ function PlayControlsCss() {
                 padding: 10px 30px;
                 border-radius: 7px;
                 letter-spacing: 2px;
-                margin: auto;
-                margin-bottom: 40px;
+                margin: -33px auto 40px;
+                width: 73%;
             }
             .inputContainer {
                 display: flex;

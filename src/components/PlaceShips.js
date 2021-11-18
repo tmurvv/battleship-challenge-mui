@@ -8,7 +8,8 @@ import {
     getOccupied,
     getGridItemNumber,
     getGridAlphaNumber,
-    gridInit
+    gridInit,
+    removeOccupied
 } from '../utils/utils';
 
 function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, setStart2, end1, setEnd1, end2, setEnd2}) {
@@ -25,6 +26,7 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
             setEnd1GoodSquares(goodSquares);
             setEnd1('');
         } else {
+            removeOccupied(player1Grid)
             setEnd2GoodSquares(goodSquares);
             setEnd2('');
         }
@@ -33,7 +35,8 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
         const shipLength = e.target.name.endsWith("1")?2:3;
         if (shipLength===2) {
             setEnd1(e.target.value);
-            setPlayer1Grid(markOccupied(start1, e.target.value, 2, player1Grid));
+            const newGrid = markOccupied(start1, e.target.value, 2, player1Grid);
+            setPlayer1Grid(newGrid);
         } else {
             setEnd2(e.target.value);
             setPlayer1Grid(markOccupied(start2, e.target.value, 3, player1Grid));
@@ -64,11 +67,11 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
                     <p>Starting Coordinate</p>
                     <select name='start2' onChange={(e)=>{setStart2(e.target.value); handleStartSelect(e);}} disabled={end1===""||end2!==''}>
                         <option key="startselect2">{start2}</option>
-                        {gridLabels.map(label=><option key={label} disabled={label===getOccupied(player1Grid)[0]}>{label}</option>)}
+                        {(removeOccupied(player1Grid)).map(label=><option key={label}>{label}</option>)}
                         <option key='safety'>{start2}</option>
                     </select>
                     <p>Ending Coordinate</p>
-                    <select name='end2' onChange={(e)=>{setEnd2(e.target.value); handleEndSelect(e);}} disabled={start2==="E9"||end2!==''}>
+                    <select name='end2' onChange={(e)=>{setEnd2(e.target.value); handleEndSelect(e);}} disabled={start2==="select"||end2!==''}>
                         <option key="endselect2">select</option>
                         {end2GoodSquares.map(label=><option key={label}>{label}</option>)}
                     </select>
