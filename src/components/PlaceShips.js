@@ -51,12 +51,12 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
                     <h3>Place Ship #1</h3>
                     <p style={{fontStyle: 'italic'}}>Length of 2</p>
                     <p>Starting Coordinate</p>
-                    <select name='start1' onChange={(e)=>{setStart1(e.target.value); handleStartSelect(e);}} disabled={end2!==''}>
+                    <select name='start1' onChange={(e)=>{setStart1(e.target.value); handleStartSelect(e);}} disabled={end1!==''||end2!==''}>
                         <option key="startselect1">select</option>
                         {gridLabels.map(label=><option key={label}>{label}</option>)}
                     </select>
                     <p>Ending Coordinate</p>
-                    <select name='end1' onChange={(e)=>{setEnd1(e.target.value); handleEndSelect(e);}} disabled={start1==="B9"||end2!==''}>
+                    <select name='end1' onChange={(e)=>{setEnd1(e.target.value); handleEndSelect(e);}} disabled={start1==="B9"||end1!==''||end2!==''}>
                         <option key="endselect1">select</option>
                         {end1GoodSquares.map(label=><option key={label}>{label}</option>)}
                     </select>

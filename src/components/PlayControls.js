@@ -1,4 +1,6 @@
 import {useState} from 'react';
+import { useEffect } from 'react/cjs/react.development';
+import { COLUMN_LABELS, COLUMN_NUMBERS } from '../constants/constants';
 import PlayControlsCss from '../styles/PlayControls.css';
 import {getGridAlphaNumber, getGridItemNumber} from '../utils/utils';
 
@@ -8,9 +10,13 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
     
     function handleFire() {
         if (!target) return;
+        if (COLUMN_LABELS.indexOf(target.substr(0,1).toUpperCase())===-1) return alert('Did not find that square. The format is "A1, A2, etc."')
+        if (COLUMN_NUMBERS.indexOf(target.substr(1,1))===-1) return alert('Did not find that square number. The format is "A1, A2, etc."')
+        
         let newGrid = [...player2Grid];
 
         // check if previously targeted
+        if (!newGrid[getGridItemNumber(target)]) return alert('Did not find that square');
         if (newGrid[getGridItemNumber(target)]!=='ship'&&newGrid[getGridItemNumber(target)]!=='empty') return alert('Already targeted')
         
         // if a hit, check if game over and update score
@@ -19,6 +25,7 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         
         // change player message
         document.querySelector('#inputLabel').innerText=newGrid[getGridItemNumber(target)] === 'ship'?`Hit !!! Good Shooting !!!`:`Miss`;
+        
         // update grid and turn
         newGrid[getGridItemNumber(target)] = newGrid[getGridItemNumber(target)]==='ship'?'hit': 'miss';
         setTarget('');
@@ -45,6 +52,22 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
         setPlayer1Turn(true);
     }
     
+    // useEffect(() => {
+    //     const handleUserKeyPress = event => {
+    //         const { key, keyCode } = event;
+
+    //         if (keyCode === 13) {
+    //             document.querySelector("#player1Fire").click();
+    //         }
+    //     };
+
+    //     window.addEventListener("keydown", handleUserKeyPress);
+
+    //     return () => {
+    //         window.removeEventListener("keydown", handleUserKeyPress);
+    //     };
+    // }, [target]); // ESLint will yell here, if `target` is missing
+    
     return (
         <>
             <div className="playControlsContainer">
@@ -53,7 +76,7 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
                     <input value={target} id='target' onChange={(e)=>setTarget(e.target.value)} name="target" disabled={!player1Turn}/>
                 </div>
                 <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>
-                    <button className='fire-btn' onClick={()=>handleFire()} hidden={!player1Turn}>Fire !!</button>
+                    <button id='player1Fire' className='fire-btn' onClick={()=>handleFire()} hidden={!player1Turn}>Fire !!</button>
                     <button className='fire-btn' onClick={()=>player2Fire()} hidden={player1Turn}>Continue</button>
                 </div>
             </div>

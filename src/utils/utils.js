@@ -25,6 +25,9 @@ export const createGridAlphaNum = () => {
 }
 export const removeOccupied = (grid) => {
     const gridItemList = createGridAlphaNum();
+    grid.forEach((item,idx)=>{
+        if (item==='ship') gridItemList[idx] = 'delete'
+    })
     return gridItemList.filter(gridItem=>gridItem!=='delete')
 }
 export const addRowColLabels = (grid) => {
@@ -99,6 +102,7 @@ export const player2place = () => {
     let shipstart2 = Math.floor(Math.random()*63);
     if (shipstart2===shipstart1) shipstart2 = Math.floor(Math.random()*63);
     if (shipstart2===shipstart1+1) shipstart2 = Math.floor(Math.random()*63); // TODO needs to be recursive
+    
     const shipend1 = shipstart1+(shipstart1%8<7&&shipstart1%8>0?1:-1);
     const shipend2 = shipstart2+(shipstart2%8<7&&shipstart2%8>0?2:-2);
     
