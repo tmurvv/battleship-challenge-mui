@@ -106,7 +106,7 @@ export const getGridItemNumber = (label) => {
     const letterIdx = COLUMN_LABELS.indexOf(letter);
 
     if (COLUMN_LABELS.indexOf(letter)===-1) return `Error. Letter must be between ${COLUMN_LABELS[0]} and ${COLUMN_LABELS[COLUMN_LABELS.length-1]}.`;
-    if (COLUMN_NUMBERS.indexOf(labelNumber.toString())===-1||label.length>2) return `Error. Number must be between ${COLUMN_NUMBERS[0]} and ${COLUMN_NUMBERS[COLUMN_LABELS.length-1]}.`; // TODO 1 and 8 should be a constant
+    if (COLUMN_NUMBERS.indexOf(labelNumber.toString())===-1||label.length>2) return `Error. Number must be between ${COLUMN_NUMBERS[0]} and ${COLUMN_NUMBERS[COLUMN_LABELS.length-1]}.`;
     
     return (labelNumber-1)*8+(letterIdx);
 }
