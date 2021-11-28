@@ -2,9 +2,33 @@ import {useState} from 'react';
 import {GameStateContext} from "./contexts/GameStateContext";
 import PlayGame from "./components/PlayGame";
 import AppCss from './styles/App.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { amber, purple } from '@mui/material/colors';
 
+// Or Create your Own theme:
+const blackOwlTheme = createTheme({
+    palette: {
+        primary: amber,
+        // primary: {
+        //     main: '#ECB208',
+        //     // main: '#dfe567',
+        //     secondary: '#beadec',
+        //     // secondary: '#D09D12',
+        //     // contrastText: "#aaaaaa"
+        //     contrastText: "#1A1F25"
+        // },
+        secondary: purple,
+    },
+    typography: {
+        fontFamily: 'Quicksand',
+        fontWeightLight: 400,
+        fontWeightRegular: 500,
+        fontWeightMedium: 600,
+        fontWeightBold: 700
+    }
+  });
 function App() {
-    const [gameState, setGameState] = useState("prepare");
+    const [gameState, setGameState] = useState("play");
     
     return (
         <>  
@@ -20,7 +44,11 @@ function App() {
                             <button className='btn' onClick={()=>setGameState('prepare')}>Begin</button>
                         </div>
                     </>
-                    :<PlayGame />
+                    :
+                    <ThemeProvider theme={blackOwlTheme}>
+                        <PlayGame />
+                    </ThemeProvider>
+                    
                 }
             </GameStateContext.Provider>
             <AppCss />

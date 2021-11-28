@@ -2,6 +2,7 @@ import {useState} from 'react';
 import { COLUMN_LABELS, COLUMN_NUMBERS } from '../constants/constants';
 import PlayControlsCss from '../styles/PlayControls.css';
 import {getGridAlphaNumber, getGridItemNumber} from '../utils/utils';
+import Button from '@mui/material/Button';
 
 function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, setPlayer2Grid}) {
     const [target, setTarget] = useState('');
@@ -84,17 +85,22 @@ function PlayControls({hits, setHits, player1Grid, setPlayer1Grid, player2Grid, 
                     />
                 </div>
                 <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>
-                    <button 
+                    <Button 
                         id='player1Fire' 
-                        className='fire-btn' 
+                        color='secondary'
+                        variant='contained'
+                        type='submit'
                         onClick={()=>handleFire()} 
-                        hidden={!player1Turn}
-                    >Fire !!</button>
-                    <button 
-                        className='fire-btn' 
+                        // hidden={!player1Turn}
+                    >Fire !!</Button>
+                    <Button 
+                        // className='fire-btn' 
+                        type='submit'
+                        color='primary'
+                        variant='contained'
                         onClick={()=>player2Fire()} 
-                        hidden={player1Turn}
-                    >Continue</button>
+                        // hidden={player1Turn}
+                    >Continue</Button>
                 </div>
             </div>
             <PlayControlsCss />

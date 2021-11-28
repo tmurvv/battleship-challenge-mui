@@ -9,6 +9,7 @@ import {
     gridInit,
     removeOccupied
 } from '../utils/utils';
+import Button from '@mui/material/Button';
 
 function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, setStart2, end1, setEnd1, end2, setEnd2}) {
     const {setGameState} = useContext(GameStateContext);
@@ -96,12 +97,21 @@ function PlaceShips({player1Grid, setPlayer1Grid, start1, setStart1, start2, set
                 </div>
             </div>
             <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-                <button 
+                <Button
+                    // className='beginGame' 
+                    variant="contained"
+                    type='button' 
+                    onClick={()=>setGameState('play')} 
+                    disabled={end2===''}
+                    color="primary"
+                >Begin Game
+                </Button>
+                {/* <button 
                     className='beginGame' 
                     type='button' 
                     onClick={()=>setGameState('play')} 
                     disabled={end2===''}
-                >Begin Game</button>
+                >Begin Game</button> */}
             </div>
             <PlaceShipsCss />
         </div>
